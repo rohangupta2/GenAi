@@ -1,6 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
-import readlineSync from 'readline-sync';
 import { exec } from "child_process";
+import readlineSync from 'readline-sync';
+import 'dotenv/config'
 import { promisify } from "util";
 import fs from 'fs';
 
@@ -8,7 +9,8 @@ const asyncExecute = promisify(exec);
 const writeFileAsync = promisify(fs.writeFile);
 
 const History = [];
-const ai = new GoogleGenAI({ apiKey: "Your Gen ai api key" });
+const ai = new GoogleGenAI({});
+// const ai = new GoogleGenAI({ apiKey: "Your Gen ai api key" });
 
 async function executeCommand({ command, content, filePath }) {
     try {
@@ -137,11 +139,39 @@ async function runAgent(userProblem) {
     }
 }
 
-async function main() {
+
+// while(true){
+
+//     const question = readlineSync.question("Ask me anything -->  ");
+    
+//     if(question=='exit'){
+//         break;
+//     }
+    
+//     History.push({
+//         role:'user',
+//         parts:[{text:question}]
+//     });
+   
+//     await buildWebsite();
+
+// }
+
+// async function main() {
+//     console.log("🚀 Website Builder - Describe the website you want to create");
+//     const userProblem = readlineSync.question("Your idea: ");
+//     await runAgent(userProblem);
+//     main();
+// }
+
+while(true) {
     console.log("🚀 Website Builder - Describe the website you want to create");
     const userProblem = readlineSync.question("Your idea: ");
+    if(userProblem=='exit'){
+        break;
+    }
     await runAgent(userProblem);
-    main();
+    // main();
 }
 
-main();
+// main();
